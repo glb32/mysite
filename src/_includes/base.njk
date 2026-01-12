@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/xp.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/agents/clippy.css">
+  <script src="https://unpkg.com/webamp@1.4.2/built/webamp.bundle.min.js"></script>
+</head>
+<body>
+
+  <div id="bg-grid"></div>
+
+  <div class="screen-wrapper">
+    <div class="layout-grid">
+
+      <aside class="sidebar-col">
+        <div class="window">
+          <div class="title-bar"><div class="title-bar-text">profile</div></div>
+          <div class="window-body text-center">
+            <img src="/icons/User Accounts.png" class="avatar-img" alt="Me">
+            <p><strong>User:</strong> malchik</p>
+            <p><strong>Loc:</strong> Vienna, AT</p>
+            <p><strong>Status:</strong> Online</p>
+            <hr>
+            <div class="listening-to">
+              <img src="/icons/My Music.png" class="tree-icon">
+              <marquee scrollamount="3" width="80%" style="vertical-align:middle;">Daft Punk - Veridis Quo</marquee>
+            </div>
+          </div>
+        </div>
+
+        <div class="window">
+          <div class="title-bar"><div class="title-bar-text">Explorer</div></div>
+          <div class="window-body" style="padding: 5px;">
+            <ul class="tree-view">
+              <li><a href="#" onclick="navigate('home'); return false;"><img src="/icons/Desktop.png" class="tree-icon"> Desktop</a></li>
+              <li><a href="#" onclick="navigate('interests'); return false;"><img src="/icons/My Pictures.png" class="tree-icon"> My Pictures</a></li>
+              <li><a href="#" onclick="navigate('hardware'); return false;"><img src="/icons/System Properties.png" class="tree-icon"> Device Manager</a></li>
+              <li><a href="#" onclick="navigate('contact'); return false;"><img src="/icons/Entire Network.png" class="tree-icon"> Network Places</a></li>
+              <li><a href="mailto:email@example.com"><img src="/icons/Email.png" class="tree-icon"> Outlook Express</a></li>
+            </ul>
+          </div>
+        </div>
+
+      
+        
+      </aside>
+
+      <main class="main-col">
+        <div class="window">
+          <div class="title-bar">
+            <div class="title-bar-text">Microsoft Internet Explorer</div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          
+          <div class="window-body ie-toolbar">
+            <button id="btn-back" class="toolbar-btn" onclick="goBack()" disabled>
+              <img src="/icons/Back.png" class="toolbar-icon"> <span>Back</span>
+            </button> 
+            <button id="btn-fwd" class="toolbar-btn" onclick="goForward()">
+              <img src="/icons/Forward.png" class="toolbar-icon"> <span>Forward</span>
+            </button>
+            
+            <div style="width: 1px; height: 20px; background: #999; margin: 0 5px;"></div>
+            <span style="font-size: 11px; white-space: nowrap;">Address:</span>
+            
+            <div class="address-container">
+               <img src="/icons/ie_page.png" style="width:14px; margin-right:4px; opacity:0.6;">
+               <input type="text" id="address-bar" class="address-input" value="https://malchik.xyz/home" readonly>
+            </div>
+            
+            <button class="toolbar-btn" onclick="goGo()">
+               <img src="/icons/Go.png" class="toolbar-icon"> <span>Go</span>
+            </button>
+          </div>
+
+          <div class="window-body content-scroll">
+            {{ content | safe }}
+          </div>
+          
+          <div class="status-bar">
+            <p class="status-bar-field">Done</p>
+            <p class="status-bar-field" style="width: 150px;">Internet</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/jquery@3.2.1"></script>
+  <script src="https://unpkg.com/clippyjs@latest"></script>
+
+  <script>
+    // --- BACKGROUND LOGIC ---
+    const bgContainer = document.getElementById('bg-grid');
+    const cols = Math.ceil(window.innerWidth * 2 / 88);
+    const rows = Math.ceil(window.innerHeight * 2 / 31);
+    const totalButtons = cols * rows;
+
+    for (let i = 0; i < totalButtons; i++) {
+        const img = document.createElement('img');
+        const fileNum = Math.floor(Math.random() * 3986) + 1;
+        img.src = `/images/bg_buttons/${fileNum}.gif`;
+        img.onerror = function() { this.style.display = 'none'; };
+        bgContainer.appendChild(img);
+    }
+
+    // --- NAVIGATION LOGIC ---
+    const pages = ['home', 'interests', 'hardware', 'contact'];
+    let currentIndex = 0;
+
+    function navigate(pageId) {
+        currentIndex = pages.indexOf(pageId);
+        updateView();
+        if(window.activeAgent) {
+            window.activeAgent.stop();
+            window.activeAgent.play('Searching');
+        }
+    }
+
+    function goBack() { if(currentIndex>0) { currentIndex--; navigate(pages[currentIndex]); } }
+    function goForward() { if(currentIndex<pages.length-1) { currentIndex++; navigate(pages[currentIndex]); } }
+    function goGo() { 
+        $('.content-scroll').fadeOut(100).fadeIn(100); 
+        if(window.activeAgent) window.activeAgent.play('Save');
+    }
+
+    function updateView() {
+        const p = pages[currentIndex];
+        pages.forEach(pg => {
+            const el = document.getElementById('view-'+pg);
+            if(el) el.classList.toggle('hidden', pg !== p);
+        });
+        document.getElementById('address-bar').value = 'https://malchik.xyz/' + p;
+        document.getElementById('btn-back').disabled = (currentIndex === 0);
+        document.getElementById('btn-fwd').disabled = (currentIndex === pages.length - 1);
+    }
+
+    // --- AGENT ---
+    $(document).ready(function() {
+        clippy.load('Clippy', (agent) => {
+            window.activeAgent = agent;
+            agent.show();
+            agent.moveTo(window.innerWidth - 150, 50);
+            agent.play('Greeting');
+        }, null, '/agents/');
+    });
+  </script>
+</body>
+</html>
