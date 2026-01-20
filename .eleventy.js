@@ -10,7 +10,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/images/bg_buttons");
   eleventyConfig.addPassthroughCopy("src/style.css");
-
+  eleventyConfig.addPassthroughCopy("src/images/favicon.ico");
+  eleventyConfig.addPassthroughCopy("src/site.webmanifest");
   return {
     dir: { input: "src", output: "_site" }
   };

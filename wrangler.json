@@ -1,8 +1,7 @@
 {
-  "name": "macikxyz",
-  "compatibility_date": "2026-01-20",
+  "name": "my-xp-portfolio",
+  "compatibility_date": "2025-01-20",
   "assets": {
-    "directory": "./_site",
-    "binding": "ASSETS"
+    "directory": "./_site"
   }
 }

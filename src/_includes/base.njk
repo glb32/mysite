@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title }}</title>
-  
+  <title>macik.xyz</title>
+
+  <link rel="icon" href="/images/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
   <link rel="stylesheet" href="https://unpkg.com/xp.css">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/agents/clippy.css">
@@ -174,17 +178,32 @@
         document.getElementById('btn-fwd').disabled = (currentIndex === pages.length - 1);
     }
 
-    // --- MULTI-AGENT CHAOS MANAGER ---
+    // --- RANDOM AGENT CHAOS MANAGER ---
     const activeAgents = [];
-    const agentNames = ['Clippy', 'Merlin', 'Rover', 'Link']; 
+    
+    // 1. Full Roster (Matching your screenshots)
+    const fullRoster = [
+        'Bonzi', 'Clippy', 'F1', 'Genie', 'Genius', 
+        'Links', 'Merlin', 'Peedy', 'Rocky', 'Rover'
+    ];
+
+    // 2. Helper to pick random unique items
+    function getRandomAgents(arr, count) {
+        const shuffled = arr.slice().sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+    }
 
     $(document).ready(function() {
         
-        // Load every agent in the list
-        agentNames.forEach(name => {
+        // Pick 4 random agents from the roster
+        const selectedAgents = getRandomAgents(fullRoster, 4);
+        console.log("Loading Agents:", selectedAgents);
+
+        // Load the selected 4
+        selectedAgents.forEach(name => {
             clippy.load(name, (agent) => {
                 
-                // 1. Initial Setup
+                // Initial Setup
                 agent.show();
                 
                 // Random Start Position
@@ -195,15 +214,15 @@
                 // Add to global tracker
                 activeAgents.push(agent);
                 
-                // Initial Greeting (staggered slightly to avoid audio chaos)
+                // Initial Greeting (staggered slightly)
                 setTimeout(() => {
                     agent.play('Greeting');
-                }, Math.random() * 2000);
+                }, Math.random() * 3000);
 
             }, null, '/agents/');
         });
 
-        // 2. The Loop: Make them do things periodically
+        // The Game Loop
         setInterval(() => {
             if(activeAgents.length === 0) return;
 
@@ -211,21 +230,19 @@
             const agent = activeAgents[Math.floor(Math.random() * activeAgents.length)];
             
             // Flip a coin: Move or Animate?
-            if (Math.random() > 0.5) {
+            if (Math.random() > 0.6) {
                 // MOVE
                 const newX = Math.random() * (window.innerWidth - 150);
                 const newY = Math.random() * (window.innerHeight - 150);
                 agent.moveTo(newX, newY);
             } else {
                 // ANIMATE
-                // Get list of animations available for this specific agent
                 const anims = agent.animations(); 
-                // Pick a random one
                 const randomAnim = anims[Math.floor(Math.random() * anims.length)];
                 agent.play(randomAnim);
             }
 
-        }, 4000); // Triggers an event every 4 seconds
+        }, 4000); // Trigger chaos every 4 seconds
     });
   </script>
 </body>
