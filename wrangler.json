@@ -1,0 +1,8 @@
+{
+  "name": "macikxyz",
+  "compatibility_date": "2026-01-20",
+  "assets": {
+    "directory": "./_site",
+    "binding": "ASSETS"
+  }
+}
