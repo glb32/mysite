@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/xp.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/agents/clippy.css">
+
+  <link rel="preload" as="image" href="/icons/User Accounts.png">
+  <link rel="preload" as="image" href="/icons/Desktop.png">
+  <link rel="preload" as="image" href="/icons/My Pictures.png">
+  <link rel="preload" as="image" href="/icons/Back.png">
+  <link rel="preload" as="image" href="/icons/Forward.png">
+
+  <script src="https://unpkg.com/webamp@1.4.2/built/webamp.bundle.min.js"></script>
+</head>
+<body>
+
+  <div id="bg-grid"></div>
+
+  <div class="screen-wrapper">
+    <div class="layout-grid">
+
+      <aside class="sidebar-col">
+        <div class="window">
+          <div class="title-bar"><div class="title-bar-text">profile</div></div>
+          <div class="window-body text-center">
+            <img src="/icons/User Accounts.png" class="avatar-img" alt="Me">
+            <p><strong>User:</strong> ???</p>
+            <p><strong>Loc:</strong> ???</p>
+            <p><strong>Status:</strong> Online</p>
+            <hr>
+            <div class="listening-to">
+              <img src="/icons/My Music.png" class="tree-icon">
+              <marquee scrollamount="3" width="80%" style="vertical-align:middle;">Rick Astley - Never Gonna Give You Up</marquee>
+            </div>
+          </div>
+        </div>
+
+        <div class="window">
+          <div class="title-bar"><div class="title-bar-text">Explorer</div></div>
+          <div class="window-body" style="padding: 5px;">
+            <ul class="tree-view">
+              <li><a href="#" onclick="navigate('home'); return false;"><img src="/icons/Desktop.png" class="tree-icon"> Desktop</a></li>
+              <li><a href="#" onclick="navigate('interests'); return false;"><img src="/icons/My Pictures.png" class="tree-icon"> My Pictures</a></li>
+              <li><a href="#" onclick="navigate('hardware'); return false;"><img src="/icons/System Properties.png" class="tree-icon"> Device Manager</a></li>
+              <li><a href="#" onclick="navigate('contact'); return false;"><img src="/icons/Entire Network.png" class="tree-icon"> Network Places</a></li>
+              <li><a href="mailto:email@example.com"><img src="/icons/Email.png" class="tree-icon"> Outlook Express</a></li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-col">
+        <div class="window">
+          <div class="title-bar">
+            <div class="title-bar-text">Microsoft Internet Explorer</div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          
+          <div class="window-body ie-toolbar">
+            <button id="btn-back" class="toolbar-btn" onclick="goBack()" disabled>
+              <img src="/icons/Back.png" class="toolbar-icon"> <span>Back</span>
+            </button> 
+            <button id="btn-fwd" class="toolbar-btn" onclick="goForward()">
+              <img src="/icons/Forward.png" class="toolbar-icon"> <span>Forward</span>
+            </button>
+            
+            <div style="width: 1px; height: 20px; background: #999; margin: 0 5px;"></div>
+            <span style="font-size: 11px; white-space: nowrap;">Address:</span>
+            
+            <div class="address-container">
+               <img src="/icons/ie_page.png" style="width:14px; margin-right:4px; opacity:0.6;">
+               <input type="text" id="address-bar" class="address-input" value="https://malchik.xyz/home" readonly>
+            </div>
+            
+            <button class="toolbar-btn" onclick="goGo()">
+               <img src="/icons/Go.png" class="toolbar-icon"> <span>Go</span>
+            </button>
+          </div>
+
+          <div class="window-body content-scroll">
+            {{ content | safe }}
+          </div>
+          
+          <div class="status-bar">
+            <p class="status-bar-field">Done</p>
+            <p class="status-bar-field" style="width: 150px;">Internet</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/jquery@3.2.1"></script>
+  <script src="https://unpkg.com/clippyjs@latest"></script>
+
+  <script>
+    // --- BACKGROUND OPTIMIZATION ---
+    function initBackground() {
+        const bgContainer = document.getElementById('bg-grid');
+        const cols = Math.ceil(window.innerWidth * 2 / 88);
+        const rows = Math.ceil(window.innerHeight * 2 / 31);
+        const totalButtons = cols * rows;
+
+        // Pool Strategy
+        const poolSize = 50; 
+        const imagePool = [];
+        for(let k=0; k < poolSize; k++) {
+            imagePool.push(Math.floor(Math.random() * 3986) + 1);
+        }
+
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < totalButtons; i++) {
+            const img = document.createElement('img');
+            const randomFromPool = imagePool[Math.floor(Math.random() * poolSize)];
+            img.src = `/images/bg_buttons/${randomFromPool}.gif`;
+            img.loading = "lazy";
+            img.decoding = "async";
+            img.onerror = function() { this.style.display = 'none'; };
+            fragment.appendChild(img);
+        }
+        bgContainer.appendChild(fragment);
+    }
+
+    window.addEventListener('load', () => {
+        setTimeout(initBackground, 100);
+    });
+
+    // --- NAVIGATION LOGIC ---
+    const pages = ['home', 'interests', 'hardware', 'contact'];
+    let currentIndex = 0;
+
+    function navigate(pageId) {
+        currentIndex = pages.indexOf(pageId);
+        updateView();
+        
+        // Notify all agents we are navigating
+        activeAgents.forEach(agent => {
+             // 30% chance an agent reacts to navigation
+             if(Math.random() > 0.7) {
+                 agent.stop();
+                 agent.play('Searching');
+             }
+        });
+    }
+
+    function goBack() { if(currentIndex>0) { currentIndex--; navigate(pages[currentIndex]); } }
+    function goForward() { if(currentIndex<pages.length-1) { currentIndex++; navigate(pages[currentIndex]); } }
+    function goGo() { 
+        $('.content-scroll').fadeOut(100).fadeIn(100); 
+        // Notify a random agent to save
+        if(activeAgents.length > 0) {
+            const randomAgent = activeAgents[Math.floor(Math.random() * activeAgents.length)];
+            randomAgent.play('Save');
+        }
+    }
+
+    function updateView() {
+        const p = pages[currentIndex];
+        pages.forEach(pg => {
+            const el = document.getElementById('view-'+pg);
+            if(el) el.classList.toggle('hidden', pg !== p);
+        });
+        document.getElementById('address-bar').value = 'https://malchik.xyz/' + p;
+        document.getElementById('btn-back').disabled = (currentIndex === 0);
+        document.getElementById('btn-fwd').disabled = (currentIndex === pages.length - 1);
+    }
+
+    // --- MULTI-AGENT CHAOS MANAGER ---
+    const activeAgents = [];
+    const agentNames = ['Clippy', 'Merlin', 'Rover', 'Link']; 
+
+    $(document).ready(function() {
+        
+        // Load every agent in the list
+        agentNames.forEach(name => {
+            clippy.load(name, (agent) => {
+                
+                // 1. Initial Setup
+                agent.show();
+                
+                // Random Start Position
+                const x = Math.random() * (window.innerWidth - 150);
+                const y = Math.random() * (window.innerHeight - 150);
+                agent.moveTo(x, y);
+                
+                // Add to global tracker
+                activeAgents.push(agent);
+                
+                // Initial Greeting (staggered slightly to avoid audio chaos)
+                setTimeout(() => {
+                    agent.play('Greeting');
+                }, Math.random() * 2000);
+
+            }, null, '/agents/');
+        });
+
+        // 2. The Loop: Make them do things periodically
+        setInterval(() => {
+            if(activeAgents.length === 0) return;
+
+            // Pick a random agent to do something
+            const agent = activeAgents[Math.floor(Math.random() * activeAgents.length)];
+            
+            // Flip a coin: Move or Animate?
+            if (Math.random() > 0.5) {
+                // MOVE
+                const newX = Math.random() * (window.innerWidth - 150);
+                const newY = Math.random() * (window.innerHeight - 150);
+                agent.moveTo(newX, newY);
+            } else {
+                // ANIMATE
+                // Get list of animations available for this specific agent
+                const anims = agent.animations(); 
+                // Pick a random one
+                const randomAnim = anims[Math.floor(Math.random() * anims.length)];
+                agent.play(randomAnim);
+            }
+
+        }, 4000); // Triggers an event every 4 seconds
+    });
+  </script>
+</body>
+</html>

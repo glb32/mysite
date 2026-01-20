@@ -1,0 +1,23 @@
+---
+layout: base.njk
+title: Winamp Media Player
+---
+
+<script src="https://unpkg.com/webamp@1.4.2/built/webamp.bundle.min.js"></script>
+
+<script defer src="/js/webamp-setup.js"></script>
+
+<h1>♫ SYSTEM AUDIO ♫</h1>
+
+<div style="background: #002200; border: 1px solid #00ff00; padding: 15px; margin-bottom: 20px;">
+    <p>>> INITIALIZING AUDIO DRIVERS...</p>
+    <p>>> LOADING PLAYLIST: <span class="blink">Rave_Mix_Vol_1</span></p>
+    <p style="color: yellow;">WARNING: Bass levels may exceed safety parameters.</p>
+</div>
+
+<div id="winamp-container" style="height: 400px; display: flex; justify-content: center; align-items: center; border: 1px dashed #555;">
+    </div>
+
+<p align="center">
+    <em>(Drag the player window around! It's interactive!)</em>
+</p>
