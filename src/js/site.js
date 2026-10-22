@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const SITE = 'http://macik.xyz/';
+  const SITE = 'https://malchik.xyz/';
   const PAGES = ['home', 'interests', 'hardware', 'contact'];
   const $id = (id) => document.getElementById(id);
   const isDesktop = () => window.matchMedia('(min-width: 801px)').matches;
@@ -62,11 +62,8 @@
 
   function show(page) {
     const viewId = PAGES.includes(page) ? page : '404';
-    let title = '';
     document.querySelectorAll('.view').forEach((view) => {
-      const match = view.id === 'view-' + viewId;
-      view.hidden = !match;
-      if (match) title = view.dataset.title;
+      view.hidden = view.id !== 'view-' + viewId;
     });
     document.querySelectorAll('[data-nav]').forEach((link) => {
       if (link.dataset.nav === page) link.setAttribute('aria-current', 'page');
@@ -74,7 +71,6 @@
     });
 
     addressBar.value = SITE + page;
-    document.title = title + ' - malchik';
     content.scrollTop = 0;
     if (!isDesktop()) {
       const top = $id('ie-window').getBoundingClientRect().top + window.scrollY;
@@ -124,7 +120,7 @@
       e.preventDefault();
       const slug = addressBar.value.trim().toLowerCase()
         .replace(/^[a-z]+:\/\//, '')
-        .replace(/^(www\.)?macik\.xyz/, '')
+        .replace(/^(www\.)?(malchik|macik)\.xyz/, '')
         .replace(/[#/]|\.html?$/g, '')
         .replace(/[^a-z0-9-]/g, '') || 'home';
       if (slug === currentPage()) show(slug);  // "refresh"
@@ -216,12 +212,6 @@
   const ROSTER = ['Bonzi', 'Clippy', 'F1', 'Genie', 'Genius', 'Links', 'Merlin', 'Peedy', 'Rocky', 'Rover'];
   const MAX_AGENTS = 3;
   const AGENT_SIZE = 150;
-  const GREETINGS = [
-    'It looks like you\'re visiting a website. Would you like help?',
-    'Welcome! Have you tried the Start menu?',
-    'Tip: you can type a page name into the address bar.',
-    'I promise I\'m not spyware.'
-  ];
   const agents = [];
   let pending = 0;
 
@@ -242,10 +232,7 @@
       agents.push(agent);
       agent.show();
       agent.moveTo(...randomSpot());
-      setTimeout(() => {
-        agent.play('Greeting');
-        agent.speak(pick(GREETINGS));
-      }, 600 + Math.random() * 1500);
+      setTimeout(() => agent.play('Greeting'), Math.random() * 3000);
     }, () => { pending--; }, '/agents/');
   }
 
