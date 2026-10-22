@@ -1,10 +1,8 @@
 {
   "name": "macik.xyz",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Personal site for macik.xyz (Eleventy, Windows XP theme)",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "eleventy --serve",
     "build": "eleventy"
   },
@@ -18,5 +16,6 @@
   "dependencies": {
     "clippyjs": "^0.0.3",
     "jquery": "^3.7.1"
-  }
+  },
+  "private": true
 }
