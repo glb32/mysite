@@ -3,175 +3,159 @@ layout: base.njk
 title: Home
 ---
 
-<div id="view-home">
+<section id="view-home" class="view">
   <div class="bio-container">
-    <div style="text-align: center; flex-shrink: 0; width: 140px;">
-      <img src="/images/lain.png" class="avatar-img" alt="Me">
-      <p style="margin-top:5px; font-size: 11px;"><em>"Jarvis, more alcohol please"</em></p>
-    </div>
+    <figure class="bio-avatar">
+      <img src="/images/lain.webp" alt="Me" width="128" height="117">
+      <figcaption><em>"Jarvis, more alcohol please"</em></figcaption>
+    </figure>
     <div class="bio-text">
-      <h2 style="margin-top: 0;">Hi! I'm malchik</h2>
+      <h2>Hi! I'm malchik</h2>
       <p>I am a third-year Physics Undergrad and Freelance Developer.</p>
       <p>words words words wods words</p>
     </div>
   </div>
 
   <div class="detail-grid">
-    <div>
+    <div class="detail-col">
       <fieldset>
         <legend>Academic Modules</legend>
         <p>Currently studying <strong>Applied Physics</strong>:</p>
-        <ul class="tree-view" style="height: auto;">
-            <li>Mathematical Methods in Theoretical Physics</li>
-            <li>Analysis I/II</li>
-            <li>Quantum Physics I</li>
-            <li>Computing for Physicists</li>
+        <ul class="tree-view">
+          <li>Mathematical Methods in Theoretical Physics</li>
+          <li>Analysis I/II</li>
+          <li>Quantum Physics I</li>
+          <li>Computing for Physicists</li>
         </ul>
       </fieldset>
       <div class="xp-photo-frame">
-        <img src="/images/decay_headahh.png" alt="Physics">
+        <img src="/images/decay_headahh.webp" alt="Physics" width="900" height="445" loading="lazy">
       </div>
     </div>
-    <div>
+    <div class="detail-col">
       <fieldset>
         <legend>Skillset</legend>
         <p>Competencies include:</p>
-        <ul class="tree-view" style="height: auto;">
-            <li><strong>Code:</strong> Python, React/Next, Elixir, Go, Haskell</li>
-            <li><strong>Hardware:</strong> Component level repair</li>
-            <li><strong>AV:</strong> System diagnostics</li>
+        <ul class="tree-view">
+          <li><strong>Code:</strong> Python, React/Next, Elixir, Go, Haskell</li>
+          <li><strong>Hardware:</strong> Component level repair</li>
+          <li><strong>AV:</strong> System diagnostics</li>
         </ul>
       </fieldset>
       <div class="xp-photo-frame">
-        <img src="/images/opsie.jpg" alt="Repair">
+        <img src="/images/opsie.webp" alt="Repair" width="900" height="1200" loading="lazy">
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div id="view-interests" class="hidden">
+<section id="view-interests" class="view" hidden>
   <h2>Interests</h2>
-  
+
   <div class="interest-list">
-    
-    <div class="interest-item">
-      <div class="interest-header">Physics</div>
+    <article class="interest-item">
+      <h3 class="interest-header">Physics</h3>
       <div class="interest-body">
-        <div class="interest-thumb">
-          <img src="/images/lab.jpg" alt="Physics">
-        </div>
-        <div class="interest-desc">
-          <p>My primary interest. I enjoy solving problems of all sorts and am a naturally curious person, so I fell in love with it decided that it was the field I should enter.</p>
-        </div>
+        <div class="interest-thumb"><img src="/images/lab.webp" alt="Physics" loading="lazy"></div>
+        <p class="interest-desc">My primary interest. I enjoy solving problems of all sorts and am a naturally curious person, so I fell in love with it decided that it was the field I should enter.</p>
       </div>
-    </div>
+    </article>
 
-    <div class="interest-item">
-      <div class="interest-header">Music Performance</div>
+    <article class="interest-item">
+      <h3 class="interest-header">Music Performance</h3>
       <div class="interest-body">
-        <div class="interest-thumb">
-          <img src="/images/piano.jpg" alt="M_Perf">
-        </div>
-        <div class="interest-desc">
-          <p>Musical instruments (including my voice) have been my companions since childhood. I still perform as an accompanist to keep my skills sharp. Though, these days, I've been more active as a DJ and event organizer. </p>
-        </div>
+        <div class="interest-thumb"><img src="/images/piano.webp" alt="M_Perf" loading="lazy"></div>
+        <p class="interest-desc">Musical instruments (including my voice) have been my companions since childhood. I still perform as an accompanist to keep my skills sharp. Though, these days, I've been more active as a DJ and event organizer.</p>
       </div>
-    </div>
+    </article>
 
-    <div class="interest-item">
-      <div class="interest-header">Music Production</div>
+    <article class="interest-item">
+      <h3 class="interest-header">Music Production</h3>
       <div class="interest-body">
-        <div class="interest-thumb">
-          <img src="/images/flstudio.jpg" alt="Music">
-        </div>
-        <div class="interest-desc">
-          <p>I also love the technical side of sound :P.</p>
-        </div>
+        <div class="interest-thumb"><img src="/images/flstudio.webp" alt="Music" loading="lazy"></div>
+        <p class="interest-desc">I also love the technical side of sound :P.</p>
       </div>
-    </div>
+    </article>
 
-    <div class="interest-item">
-      <div class="interest-header">Hockey</div>
+    <article class="interest-item">
+      <h3 class="interest-header">Hockey</h3>
       <div class="interest-body">
-        <div class="interest-thumb">
-          <img src="/images/hokej.jpg" alt="Hockey">
-        </div>
-        <div class="interest-desc">
-          <p>An injury at 14 took me out of organized hockey, but the passion still remains!</p>
-        </div>
+        <div class="interest-thumb"><img src="/images/hokej.webp" alt="Hockey" loading="lazy"></div>
+        <p class="interest-desc">An injury at 14 took me out of organized hockey, but the passion still remains!</p>
       </div>
-    </div>
+    </article>
 
-    <div class="interest-item">
-      <div class="interest-header">Basketball</div>
+    <article class="interest-item">
+      <h3 class="interest-header">Basketball</h3>
       <div class="interest-body">
-        <div class="interest-thumb">
-          <img src="/images/curry.jpg" alt="Basketball">
-        </div>
-        <div class="interest-desc">
-          <p>I'm fascinated by the spacing and mechanics of the game. It’s pretty humbling to play as I'm not particularly tall, but that also makes it more fun.</p>
-        </div>
+        <div class="interest-thumb"><img src="/images/curry.webp" alt="Basketball" loading="lazy"></div>
+        <p class="interest-desc">I'm fascinated by the spacing and mechanics of the game. It’s pretty humbling to play as I'm not particularly tall, but that also makes it more fun.</p>
       </div>
-    </div>
+    </article>
 
-    <div class="interest-item">
-      <div class="interest-header">Electronics & Electronics Repair</div>
+    <article class="interest-item">
+      <h3 class="interest-header">Electronics &amp; Electronics Repair</h3>
       <div class="interest-body">
-        <div class="interest-thumb">
-          <img src="/images/rossmann.jpg" alt="fixing shit">
-        </div>
-        <div class="interest-desc">
-          <p>I am a tinkerer by heart and enjoy fixing things. Repaired phones, PCs, and laptoaps for a couple of years as a side hustle. </p>
-        </div>
+        <div class="interest-thumb"><img src="/images/rossmann.webp" alt="fixing shit" loading="lazy"></div>
+        <p class="interest-desc">I am a tinkerer by heart and enjoy fixing things. Repaired phones, PCs, and laptoaps for a couple of years as a side hustle.</p>
       </div>
-    </div>
-
+    </article>
   </div>
-</div>
+</section>
 
-<div id="view-hardware" class="hidden">
+<section id="view-hardware" class="view" hidden>
   <h2>Hardware</h2>
-  <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-    <div style="flex: 1; min-width: 250px;">
-      <fieldset>
-        <legend>Workstation</legend>
-        <table class="specs-table">
-          <tr><td>CPU</td><td>Ryzen 7 7800X3D</td></tr>
-          <tr><td>Cooler</td><td>Arctic Liquid Freezer III 360</td></tr>
-          <tr><td>GPU</td><td>RX 6800 XT NITRO+</td></tr>
-          <tr><td>RAM</td><td>32GB HyperX DDR5</td></tr>
-          <tr><td>Mobo</td><td>ASrock B650M-HDV</td></tr>
-        </table>
-      </fieldset>
-    </div>
-    <div style="flex: 1; min-width: 250px;">
-      <fieldset>
-        <legend>Audio Lab</legend>
-        <table class="specs-table">
-          <tr><td>Monitors</td><td>2x Yamaha HS7 + HS8S Sub</td></tr>
-          <tr><td>Keys</td><td>Yamaha CP88</td></tr>
-          <tr><td>Input</td><td>AT-2020USB+</td></tr>
-          <tr><td>Deck</td><td>AlphaTheta XDJ-AZ</td></tr>
-        </table>
-      </fieldset>
-    </div>
+  <div class="spec-grid">
+    <fieldset>
+      <legend>Workstation</legend>
+      <table class="specs-table">
+        <tr><th>CPU</th><td>Ryzen 7 7800X3D</td></tr>
+        <tr><th>Cooler</th><td>Arctic Liquid Freezer III 360</td></tr>
+        <tr><th>GPU</th><td>RX 6800 XT NITRO+</td></tr>
+        <tr><th>RAM</th><td>32GB HyperX DDR5</td></tr>
+        <tr><th>Mobo</th><td>ASrock B650M-HDV</td></tr>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>Audio Lab</legend>
+      <table class="specs-table">
+        <tr><th>Monitors</th><td>2x Yamaha HS7 + HS8S Sub</td></tr>
+        <tr><th>Keys</th><td>Yamaha CP88</td></tr>
+        <tr><th>Input</th><td>AT-2020USB+</td></tr>
+        <tr><th>Deck</th><td>AlphaTheta XDJ-AZ</td></tr>
+      </table>
+    </fieldset>
   </div>
-</div>
+</section>
 
-<div id="view-contact" class="hidden">
+<section id="view-contact" class="view" hidden>
   <h2>Contact</h2>
   <div class="contact-grid">
     <a href="mailto:macik@macik.xyz" class="contact-card">
-      <img src="/icons/Email.png" class="xp-icon">
+      <img src="/icons/email.png" class="xp-icon" alt="">
       <div><strong>Email</strong><span>macik@macik.xyz</span></div>
     </a>
-    <a href="https://x.com/malxhik" target="_blank" class="contact-card">
-      <img src="/icons/Entire Network.png" class="xp-icon">
+    <a href="https://x.com/malxhik" target="_blank" rel="noopener" class="contact-card">
+      <img src="/icons/entire-network.png" class="xp-icon" alt="">
       <div><strong>X.com</strong><span>@malxhik</span></div>
     </a>
-    <a href="https://t.me/malxhik" target="_blank" class="contact-card">
-      <img src="/icons/MSN Messenger.png" class="xp-icon">
+    <a href="https://t.me/malxhik" target="_blank" rel="noopener" class="contact-card">
+      <img src="/icons/msn-messenger.png" class="xp-icon" alt="">
       <div><strong>Telegram</strong><span>Direct Message</span></div>
     </a>
   </div>
-</div>
+</section>
+
+<section id="view-404" class="view view-404" hidden>
+  <h2>The page cannot be displayed</h2>
+  <p>The page you are looking for is currently unavailable. The Web site might be experiencing technical
+    difficulties, or you may need to adjust your browser settings.</p>
+  <hr>
+  <p>Please try the following:</p>
+  <ul>
+    <li>Click the <strong>Back</strong> button to try another link.</li>
+    <li>Check the address. Pages on this site are <code>home</code>, <code>interests</code>,
+      <code>hardware</code> and <code>contact</code>.</li>
+  </ul>
+  <p class="muted">HTTP 404 - File not found<br>Internet Explorer</p>
+</section>
